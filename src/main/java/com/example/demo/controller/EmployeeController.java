@@ -6,6 +6,9 @@ import com.example.demo.service.EmployeeService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+import com.example.demo.dto.EmployeeDTO;
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/employees")
 public class EmployeeController {
@@ -38,6 +41,18 @@ public List<Employee> searchByName(@RequestParam String name) {
 @GetMapping("/{id}")
 public Employee getEmployeeById(@PathVariable Long id) {
     return employeeService.getEmployeeById(id);
+}
+
+@PostMapping("/dto")
+public EmployeeDTO addEmployeeDTO(
+        @Valid @RequestBody EmployeeDTO employeeDTO) {
+
+    return employeeService.saveEmployeeDTO(employeeDTO);
+}
+@DeleteMapping("/{id}")
+public String deleteEmployee(@PathVariable Long id) {
+    employeeService.deleteEmployee(id);
+    return "Employee deleted successfully";
 }
 
 }
